@@ -10,3 +10,6 @@ d=datestr(d);
 seed=str2num(d(1:2));
 seedP=abs(seed^4*seed^3-3*seed^5);
 rng(seedP)
+
+
+%% Commenting 
