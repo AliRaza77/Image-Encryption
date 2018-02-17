@@ -76,7 +76,8 @@ varargout{1} = handles.output;
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
  Key=encryptmain
- msgbox( sprintf( 'The key to decrypt your image is: %d', Key))
+ msgbox( sprintf( 'The key to decrypt your image is: %d Your key has been copied to clipboard.', Key))
+
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -85,9 +86,9 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % --- Executes on button press in pushbutton2.
 function pushbutton2_Callback(hObject, eventdata, handles)
 seedP = inputdlg('Enter your key:')
-seedP=cell2mat(seedP(1))
-seedP=str2num(seedP)
-decryptmain(seedP)
+seedP=cell2mat(seedP(1));
+seedP=str2num(seedP);
+decryptmain(seedP);
 % hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
