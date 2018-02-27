@@ -4,7 +4,7 @@ function decryptmain(seedP)
     FullPath=[P,F];
     encimage=imread(FullPath);
     [r,c,s]=size(encimage);
-    %% IsEn Check
+    %% IsEn Check                                     % Checks to see whether the image has already been encrypted or not.
     IsEn= IsEncrypted(encimage);
     if IsEn == 1
         
@@ -20,16 +20,16 @@ function decryptmain(seedP)
     n2=str2num(SK(end)); n1=str2num(SK(end-n2-1)); n3=str2num(SK(end-n2-n1-2));
     enc2=str2num(SK(end-n2:end-1)); enc1=str2num(SK(end-n2-n1-1:end-n2-2));
     encimage(1)=enc1; encimage(end)=enc2;
-    %% Image Verification
+    %% Image Verification                           % Verifies that the key used is valid for the input image.
     if encimage(floor(end/2)) == str2num(SK(end-n2-n1-n3-2:end-n2-n1-n3))
         
     else
         msgbox('Error. The key for your image is incorrect.','Error','error')
         return
     end
-    %% EN'3
+    %% EN'3                                                   
     for ss= [10:-1:1]
-    rng(62+ss)
+    rng(62+ss)                                      % This is decryption via bitxor, all the equations applied earlier have been reapplied in the reverse order.
     de3=uint8(randi([-255 255],r,c,s));
     encimage= bitxor(encimage, de3);
     end

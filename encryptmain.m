@@ -8,7 +8,7 @@ function Key = encryptmain()
     if IsEn == 1
         msgbox('Error. The image has already been encrypted.','Error','error')
     elseif IsEn == 0 
-        %% EN 1
+        %% Seed Generator
         d=datetime('today');
         d=datenum(d);
         d=datestr(d);
@@ -20,8 +20,9 @@ function Key = encryptmain()
         seedP=seedP(1:3);
         seedP=str2num(seedP);
         rng(seedP,'twister');
+        %% EN 1
         [r,c,s]=size(imdata);
-        en1=uint8(randi([-255 255],r,c,s));
+        en1=uint8(randi([-255 255],r,c,s));                                % EN1, EN2, and EN3 are all equations applied via bitxor to the image for encryption.
         encimage = bitxor(imdata, en1);
         %% EN 2
         rng(62+seedP)
@@ -33,7 +34,7 @@ function Key = encryptmain()
         en3=uint8(randi([-255 255],r,c,s));
         encimage= bitxor(encimage, en3);
         end
-        %% IsEncrypted
+        %% IsEncrypted                
         IsE=[encimage(1),numel(num2str(encimage(1))),encimage(end),numel(num2str(encimage(end)))];
         IsEC=num2str(IsE);
         IsEC=IsEC(find(~isspace(IsEC)));
@@ -41,13 +42,13 @@ function Key = encryptmain()
         SK=[num2str(seedP),IsEC];
         SK=SK(find(~isspace(SK)));
         format long g
-        %% Image Tagger
-        Tag=encimage(floor(end/2))
+        %% Image Tagger               % Assigns the Image with an arbitrary Tag
+        Tag=encimage(floor(end/2));
         Tag=num2str(Tag);
-        Tag=[Tag,num2str(numel(Tag))]
-        SK=[SK(1:3),Tag,SK(4:end)]
+        Tag=[Tag,num2str(numel(Tag))];
+        SK=[SK(1:3),Tag,SK(4:end)];
         SK=str2num(SK);
-        %% KeyGen
+        %% KeyGen                     % Produces the key for each encrypted image
         Key = SK;
         imwrite(encimage,'encrypted.png')
         figure ,imshow(encimage)
